@@ -1,6 +1,7 @@
 package com.stock.microservices.dbservice.model;
 
-import static javax.persistence.GenerationType.AUTO;
+//import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +14,9 @@ import javax.persistence.Table;
 public class Ticker {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
-    @Column(name="id")
-    private Integer id;
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name="ID", updatable = false, nullable = false)
+    private int id;
 
     @Column(name="ticker_name")
     private String tickerName;
@@ -26,7 +27,7 @@ public class Ticker {
         this.tickerName = tickerName;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -38,7 +39,7 @@ public class Ticker {
         this.tickerName = tickerName;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

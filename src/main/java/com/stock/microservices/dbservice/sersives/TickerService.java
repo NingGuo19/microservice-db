@@ -39,26 +39,27 @@ public class TickerService {
         return ResponseEntity.ok(this.tickerRepository.save(ticker));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Ticker> findById(@PathVariable Integer id ){
+    public ResponseEntity<Ticker> findById(@PathVariable int id ){
         Optional<Ticker> ticker = this.tickerRepository.findById(id);
         if( !ticker.isPresent()){
-            ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(ticker.get());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Ticker> update(@PathVariable Integer id, @Valid @RequestBody Ticker ticker){
+    public ResponseEntity<Ticker> update(@RequestBody Ticker ticker){
         
-        Optional<Ticker> tickerOp = this.tickerRepository.findById(id);
+        Optional<Ticker> tickerOp = this.tickerRepository.findById(ticker.getId());
         if(!tickerOp.isPresent()){
-            ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(this.tickerRepository.save(ticker));
+        this.tickerRepository.save(ticker);
+        return ResponseEntity.ok(this.tickerRepository.findById(Integer.valueOf(ticker.getId())).get());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Ticker> deleteById(@PathVariable Integer id){
+    public ResponseEntity<Ticker> deleteById(@PathVariable int id){
 
         Optional<Ticker> tickerOp = this.tickerRepository.findById(id);
         if(!tickerOp.isPresent()){
